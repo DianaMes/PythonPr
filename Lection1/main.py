@@ -81,7 +81,7 @@
 text = 'съешь ещё этих мягких французских булок'
 print(text[0]) # c
 print(text[1]) # ъ
-print(text[len(text)-1]) # к
+print(text[len(text)-1]) # 
 print(text[-5]) # б
 print(text[:]) # съешь ещё этих мягких французских булок
 print(text[:2]) # съ
