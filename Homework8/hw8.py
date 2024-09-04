@@ -212,7 +212,7 @@
 # from collections import Counter
 
 # # Указываем путь к архиву и временной папке для распаковки
-# zip_file_path = "voina-i-mir.zip"
+# zip_file_path = "C:/GB/PythonProgr/PythonPr/Homework8/voyna-i-mir.txt"
 # extracted_folder = "voina_i_mir_extracted"
 
 # # Распаковываем архив
@@ -244,27 +244,66 @@
 
 # -------------------------------------
 
-import zipfile
+# import zipfile
 
-# Открываем архив и ищем текстовый файл
-with zipfile.ZipFile("voina-i-mir.zip", "r") as zip_ref:
-    # Получаем список файлов в архиве и выбираем первый текстовый файл
-    file_name = [name for name in zip_ref.namelist() if name.endswith(".txt")][0]
-# Открываем выбранный файл и читаем его содержимое
-with zip_ref.open(file_name) as file:
-    text = file.read().decode("utf-8")
-# Инициализируем словарь для подсчета количества символов
-char_count = {}
-# Подсчитываем количество вхождений каждого символа
-for char in text:
-    if char.isalpha():  # Учитываем только буквы
-        if char in char_count:
-            char_count[char] += 1
-        else:
-            char_count[char] = 1
-# Сортируем символы по частоте (в убывании) и по алфавиту при равенстве частоты
-sorted_chars = sorted(char_count.items(), key=lambda x: (-x[1], x[0]))
-# Записываем результаты в файл
-with open("statistik.txt", "w", encoding="utf-8") as file:
-    for char, freq in sorted_chars:
-        file.write(f"{char}: {freq}\n")
+
+# voyna-i-mir = "C:/GB/PythonProgr/PythonPr/Homework8/voyna-i-mir.txt"
+
+# # Открываем архив и ищем текстовый файл
+# with zipfile.ZipFile(voyna-i-mir, "r") as zip_ref:
+#     # Получаем список файлов в архиве и выбираем первый текстовый файл
+#     file_name = [name for name in zip_ref.namelist() if name.endswith(".txt")][0]
+# # Открываем выбранный файл и читаем его содержимое
+# with zip_ref.open(file_name) as file:
+#     text = file.read().decode("utf-8")
+# # Инициализируем словарь для подсчета количества символов
+# char_count = {}
+# # Подсчитываем количество вхождений каждого символа
+# for char in text:
+#     if char.isalpha():  # Учитываем только буквы
+#         if char in char_count:
+#             char_count[char] += 1
+#         else:
+#             char_count[char] = 1
+# # Сортируем символы по частоте (в убывании) и по алфавиту при равенстве частоты
+# sorted_chars = sorted(char_count.items(), key=lambda x: (-x[1], x[0]))
+# # Записываем результаты в файл
+# with open("statistik.txt", "w", encoding="utf-8") as file:
+#     for char, freq in sorted_chars:
+#         file.write(f"{char}: {freq}\n")
+# ----------------------------------------------------
+
+from collections import Counter
+import os
+
+# Указываем путь к текстовому файлу
+text_file_path = "C:/GB/PythonProgr/PythonPr/Homework8/voyna-i-mir.txt"
+
+# Проверка, существует ли файл
+if not os.path.isfile(text_file_path):
+    print(f"Файл по пути {text_file_path} не существует.")
+else:
+    try:
+        # Читаем содержимое файла
+        with open(text_file_path, "r", encoding="utf-8") as file:
+            text = file.read()
+
+        # Подсчитываем частоту букв
+        letter_counts = Counter(text)
+
+        # Сортируем буквы по убыванию частоты
+        sorted_letter_counts = sorted(
+            letter_counts.items(), key=lambda x: x[1], reverse=True
+        )
+
+        # Выводим результат на экран
+        for letter, count in sorted_letter_counts:
+            print(f"{letter}: {count}")
+
+        # Если нужно записать результат в файл
+        with open("letter_frequency.txt", "w", encoding="utf-8") as file:
+            for letter, count in sorted_letter_counts:
+                file.write(f"{letter}: {count}\n")
+
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
